@@ -1,8 +1,10 @@
 def main():
     # read in CLI arguments
     args = parse_cli()
-    print args.numLevels
-    print args.outputFile
+    # generate tree
+    treeArray = makeTree(args.numLevels)
+    # write tree to output file
+    printTree(treeArray, args.outputFile)
 
 def parse_cli():
     import argparse as ap
@@ -24,4 +26,42 @@ def parse_cli():
 
     return args
 
+def makeTree(numLevels):
+    '''
+    This function will generate a tree following the guidelines given in the assignment. The
+    root node will always be 1. The left child node will contain the sum of the parent node's value and
+    the value of the node to the left of the parent. If the parent is the leftmost node, then the left child
+    node will just hold the same value held by its parent. The right child node will contain the sum of the
+    parent node's value and the value of the node to the right of the parent. If the parent is the rightmost node, then the left child node will just hold the same value held by its parent. 
+    
+    Inputs:
+    numLevels (int) - number of levels in the tree.
+    
+    Outputs:
+    treeArray (1D int array) - 1D integer array representing the generated tree.
+                               This array is organized like a heap, so the zeroth index is not used.
+                               Index 1 holds root node value, indices 2-3 hold the second level nodes,
+                               indices 4-7 hold the third level nodes, etc.
+    '''
+    # The tree will be represented using a 1D integer array that is organized like a heap. This makes it
+    # easy to get a node's parent, as well as indexing into the nodes to the right and left of the parent.
+    # For example, given a node at index N, the index of its parent is N/2. Assuming the parent is not
+    # the leftmost or rightmost node, its siblings will be located at indices (N/2)-1 and (N/2)+1.
+    
+    treeArray = [0]
+    return treeArray
+    
+def printTree(treeArray, outputFileName):
+    '''
+    This function will write the treeArray to a text file with the name given as a command line argument.
+    
+    Inputs: 
+    treeArray (1D int array) - array holding the values of the tree
+    outputFileName (String) - name of output text file
+    
+    Outputs:
+    Text file with name outputFileName will be created in the CWD.
+    '''
+    print "Writing tree to " + outputFileName
+    
 main()
