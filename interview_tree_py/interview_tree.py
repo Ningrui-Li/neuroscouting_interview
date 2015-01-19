@@ -48,8 +48,11 @@ def makeTree(numLevels):
     # For example, given a node at index N, the index of its parent is N/2. Assuming the parent is not
     # the leftmost or rightmost node, its siblings will be located at indices (N/2)-1 and (N/2)+1.
     
+    # Pre-allocating space for the tree
+    treeArray = [None] * pow(2, numLevels)
     # Note that the zeroth index is unused.
-    treeArray = [0]
+    treeArray[0] = 0
+    
     for level in range(1, numLevels+1):
         # levelFirstIndex is the first array index of each level.
         # For example, the first (and only) index of level 1 is array index 1.
@@ -59,7 +62,14 @@ def makeTree(numLevels):
         levelFirstIndex = pow(2, level-1)
         for levelIndex in range(0, pow(2, level-1)):
             # Iterate through each index in the row.
-            print levelIndex+levelFirstIndex
+
+            # Base case, root node holds value of 1
+            if level == 1:
+                treeArray.append(1)
+            
+            currentIndex = levelIndex + levelFirstIndex
+            if (levelIndex == 0) or (levelIndex == pow(2, level-1)-1):
+                treeArray[currentIndex] = 1
     
     return treeArray
     
@@ -74,6 +84,7 @@ def printTree(treeArray, outputFileName):
     Outputs:
     Text file with name outputFileName will be created in the CWD.
     '''
+    print treeArray
     print "Writing tree to " + outputFileName
     
 main()
