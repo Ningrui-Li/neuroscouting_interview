@@ -48,7 +48,19 @@ def makeTree(numLevels):
     # For example, given a node at index N, the index of its parent is N/2. Assuming the parent is not
     # the leftmost or rightmost node, its siblings will be located at indices (N/2)-1 and (N/2)+1.
     
+    # Note that the zeroth index is unused.
     treeArray = [0]
+    for level in range(1, numLevels+1):
+        # levelFirstIndex is the first array index of each level.
+        # For example, the first (and only) index of level 1 is array index 1.
+        # The array index of the first node in level 2 is array index 2.
+        # The array index of the first node in level 3 is array index 4.
+        # The array index of the first node in level N is array index 2^(N-1).
+        levelFirstIndex = pow(2, level-1)
+        for levelIndex in range(0, pow(2, level-1)):
+            # Iterate through each index in the row.
+            print levelIndex+levelFirstIndex
+    
     return treeArray
     
 def printTree(treeArray, outputFileName):
