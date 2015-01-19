@@ -62,17 +62,27 @@ def makeTree(numLevels):
         levelFirstIndex = pow(2, level-1)
         for levelIndex in range(0, pow(2, level-1)):
             # Iterate through each index in the row.
-
-            # Base case, root node holds value of 1
             if level == 1:
+            # Base case, root node holds value of 1
                 treeArray[1] = 1
             else:
                 currentIndex = levelIndex + levelFirstIndex
+
                 if (levelIndex == 0) or (levelIndex == pow(2, level-1)-1):
+                    # If leftmost node or rightmost node of a level, the node value located there
+                    # must be 1 because its parent must also be a leftmost or rightmost node, respectively.
                     treeArray[currentIndex] = 1
                 elif (levelIndex % 2 == 1):
+                    # If index of the node is odd, then it is a right child, so the value there
+                    # should be the sum of its parent node and the node to the right of the parent.
+                    
+                    # Value of child node   = value of parent node      + value of node to right of parent
                     treeArray[currentIndex] = treeArray[currentIndex/2] + treeArray[(currentIndex/2)+1]
                 else:
+                    # If index of the node is even, then it is a left child, so the value there
+                    # should be the sum of its parent node and the node to the left of the parent.
+                    
+                    # Value of child node   = value of parent node      + value of node to left of parent
                     treeArray[currentIndex] = treeArray[currentIndex/2] + treeArray[(currentIndex/2)-1]
     
     return treeArray
