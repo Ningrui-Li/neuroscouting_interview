@@ -65,11 +65,15 @@ def makeTree(numLevels):
 
             # Base case, root node holds value of 1
             if level == 1:
-                treeArray.append(1)
-            
-            currentIndex = levelIndex + levelFirstIndex
-            if (levelIndex == 0) or (levelIndex == pow(2, level-1)-1):
-                treeArray[currentIndex] = 1
+                treeArray[1] = 1
+            else:
+                currentIndex = levelIndex + levelFirstIndex
+                if (levelIndex == 0) or (levelIndex == pow(2, level-1)-1):
+                    treeArray[currentIndex] = 1
+                elif (levelIndex % 2 == 1):
+                    treeArray[currentIndex] = treeArray[currentIndex/2] + treeArray[(currentIndex/2)+1]
+                else:
+                    treeArray[currentIndex] = treeArray[currentIndex/2] + treeArray[(currentIndex/2)-1]
     
     return treeArray
     
