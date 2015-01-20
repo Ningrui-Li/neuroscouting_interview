@@ -1,6 +1,15 @@
 def main():
+    import sys
     # read in CLI arguments
     args = parse_cli()
+    # basic error checking
+    if args.numLevels <= 0:
+      sys.exit("ERROR: Number of levels must be a positive integer.")
+    if args.outputFile != makeValidFileName(args.outputFile):
+      print "File name contained illegal characters, which were removed."
+      print "%s was changed to %s" % (args.outputFile, makeValidFileName(args.outputFile))
+      args.outputFile = makeValidFileName(args.outputFile)
+    
     # generate tree
     treeArray = makeTree(args.numLevels)
     # write tree to output file
@@ -26,6 +35,16 @@ def parse_cli():
 
     return args
 
+def makeValidFileName(fileName):
+    import string
+    
+    validChars = string.ascii_letters + string.digits + "._-@#$%^&()"
+    validFileName = ''
+    for char in fileName:
+        if char in validChars:
+            validFileName += char
+    return validFileName
+    
 def makeTree(numLevels):
     '''
     This function will generate a tree following the guidelines given in the assignment. The
