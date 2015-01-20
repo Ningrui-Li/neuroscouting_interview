@@ -76,13 +76,13 @@ def makeTree(numLevels):
                     # If index of the node is odd, then it is a right child, so the value there
                     # should be the sum of its parent node and the node to the right of the parent.
                     
-                    # Value of child node   = value of parent node      + value of node to right of parent
+                    # Value of child node   =   value of parent node    + value of node to right of parent
                     treeArray[currentIndex] = treeArray[currentIndex/2] + treeArray[(currentIndex/2)+1]
                 else:
                     # If index of the node is even, then it is a left child, so the value there
                     # should be the sum of its parent node and the node to the left of the parent.
                     
-                    # Value of child node   = value of parent node      + value of node to left of parent
+                    # Value of child node   =   value of parent node    + value of node to left of parent
                     treeArray[currentIndex] = treeArray[currentIndex/2] + treeArray[(currentIndex/2)-1]
     
     return treeArray
@@ -98,7 +98,26 @@ def printTree(treeArray, outputFileName):
     Outputs:
     Text file with name outputFileName will be created in the CWD.
     '''
-    print treeArray
+    import math
+
+    #treeFile = open(outputFileName, 'w')
     print "Writing tree to " + outputFileName
+    
+    numLevels = int(math.log(len(treeArray), 2))
+    
+    for level in range(1, numLevels+1):
+        # Loop through each tree level.
+        # levelFirstIndex is the array index in treeArray where the first node value of that
+        # level is located.
+        levelFirstIndex = pow(2, level-1)
+        levelString = ''
+        for levelIndex in range(pow(2, level-1)):
+            # Loop through each node in the current level and concatenate each
+            # node value to a simple string, with node values separated by spaces.
+            currentIndex = levelFirstIndex + levelIndex;
+            levelString += str(treeArray[currentIndex]) + ' '
+        print levelString
+        
+    #close(treeFile)
     
 main()
