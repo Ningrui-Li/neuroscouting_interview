@@ -123,7 +123,10 @@ def printTree(treeArray, outputFileName):
         # level is located.
         levelFirstIndex = pow(2, level-1)
         
+        # levelString contains the node values
         levelString = ''
+        # connectorString contains the connections between node values
+        connectorString = ''
         for levelIndex in range(pow(2, level-1)):
             # Loop through each node in the current level and concatenate each
             # node value to a simple string, with node values separated by spaces.
@@ -142,8 +145,12 @@ def printTree(treeArray, outputFileName):
                     levelString += ' '*(charsBetweenNodes) + str(treeArray[currentIndex]) + ' '*(charsBetweenNodes+1)
             else:
                 # In all other levels, the spacing between nodes is more predictable.
-                levelString += ' '*(charsBetweenNodes) + str(treeArray[currentIndex]) + ' '*(charsBetweenNodes+1)      
+                levelString += ' '*(charsBetweenNodes) + str(treeArray[currentIndex]) + ' '*(charsBetweenNodes+1)
+                # connectorString basically places slashes on the characters right before and after each node
+                connectorString += ' '*(charsBetweenNodes-1) + '/ \\' + ' '*(charsBetweenNodes)
+                
         treeFile.write(levelString+'\n') 
+        treeFile.write(connectorString+'\n')
         
     treeFile.close()
     
