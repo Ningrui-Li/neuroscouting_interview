@@ -1,4 +1,5 @@
 from scipy import *
+#from numpy import *
 import matplotlib.pyplot as plt
 
 sampling_rate = 500.0
@@ -10,6 +11,16 @@ freq2 = 35
 freq3 = 10
 
 signal = (1./3)*(sin(2*pi*freq1*time)+sin(2*pi*freq2*time)+sin(2*pi*freq3*time))
+signal_FT = abs(fft(signal))
+
+# create frequency x-axis labels for FT plot
+L = (len(signal)-1)/2
+f = arange(0, sampling_rate/2 + (sampling_rate/2)/L, (sampling_rate/2)/L)
+
+# limit frequency range between 0 Hz - 75 Hz for FT plot
+frequencyLimitIndices = nonzero(f<75);
+f = f[frequencyLimitIndices];
+signal_FT = signal_FT[frequencyLimitIndices];
 
 # Unfiltered signal - time domain plot
 plt.subplot(2, 1, 1)
