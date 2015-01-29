@@ -29,4 +29,11 @@ plt.xlabel('Time (s)')
 plt.ylabel('Amplitude')
 plt.title('Unfiltered Signal (Sum of 10 Hz, 35 Hz, 60 Hz Sine Waves) - Time Domain')
 
+# Unfiltered signal - frequency domain plot
+plt.subplot(2, 1, 2)
+plt.plot(f, signal_FT)
+plt.xlabel('Frequency (Hz)')
+plt.ylabel('Power')
+plt.title('Amplitude Spectrum of Unfiltered Signal - Frequency Domain')
+
 plt.show()
