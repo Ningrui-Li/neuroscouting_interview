@@ -36,4 +36,5 @@ plt.xlabel('Frequency (Hz)')
 plt.ylabel('Power')
 plt.title('Amplitude Spectrum of Unfiltered Signal - Frequency Domain')
 
+plt.tight_layout()
 plt.show()
