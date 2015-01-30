@@ -3,7 +3,7 @@ from scipy import *
 import matplotlib.pyplot as plt
 
 sampling_rate = 500.0
-Filt = array([58, 82])
+Filt = array([58, 62])
 time = arange(0, 5+1/sampling_rate, 1/sampling_rate)
 
 freq1 = 60
