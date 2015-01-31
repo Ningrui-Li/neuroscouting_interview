@@ -3,6 +3,27 @@ from scipy import signal as sig
 #from numpy import *
 import matplotlib.pyplot as plt
 
+def create_sine_wave(fs, maxTime, freqs):
+    '''
+    This function creates a signal consisting of a sum of sinusoids
+    with frequencies defined in freqs and amplitude 1.
+        
+    Inputs:
+    fs - sampling rate (Hz)
+    maxTime - Maximum time (s) to which signal is calculated.
+    freqs - Array of sine frequencies (Hz) to include.
+
+    Outputs:
+    time - time vector of signal (s)
+    signal - signal amplitude through time
+    
+    Ex: 
+    Create signal with sampling rate 500 Hz, with sine waves of
+    frequences 60 Hz, 30 Hz, and 15 Hz. Evaluate from 0 s to 5 s.
+    
+    time, signal = create_sine_wave(500, 5, [60 30 15])
+    '''
+
 def create_time_freq_plots(time, signal_time, freq, signal_FT, title):
     '''
     This function creates a figure with two subplots showing the
