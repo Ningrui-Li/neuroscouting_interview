@@ -9,8 +9,7 @@ def main():
     time, signal = create_sine_wave(sampling_rate, maxTime, frequencies)
 
     signal_FT = abs(fft(signal))
-
-    ## create frequency x-axis labels for FT plot
+    # create frequency x-axis labels for FT plot
     L = (len(signal)-1)/2
     f = arange(0, sampling_rate/2 + (sampling_rate/2)/L, (sampling_rate/2)/L)
 
@@ -104,5 +103,24 @@ def create_time_freq_plots(time, signal_time, freq, signal_FT, title):
     plt.xlabel('Frequency (Hz)')
     plt.ylabel('Power')
     plt.title(title + ' - Frequency Domain')
+    
+def notch_filter_signal(signal, Wp, Ws, fs, debug):
+    '''
+    Applies a notch filter to input signal using the given stopband and
+    passband frequencies.
+    Assumes filter parameters are maximum -40 dB attenuation in
+    stopband and -3 dB attenuation in passband.
+    
+    Input: 
+    signal - vector of signal amplitudes in time domain
+    Wp - passband frequencies (normalized between 0 and 1)
+    Ws - stopband frequencies (normalized between 0 and 1)
+    fs - sample rate (Hz)
+    debug - boolean for enabling debugging. If True, frequency response
+            plot of filter is generated.
+    
+    Output:
+    signal_filtered - vector of signal after applying the notch filter
+    '''
     
 main()
