@@ -23,7 +23,14 @@ def create_sine_wave(fs, maxTime, freqs):
     
     time, signal = create_sine_wave(500, 5, [60 30 15])
     '''
-
+    time = arange(0, maxTime+1/fs, 1/fs)
+    signal = empty(len(time), dtype=float) 
+    for freq in freqs:
+        signal += sin(2*pi*freq*time)
+        
+    signal = signal / len(freqs) # Scale to unity amplitude
+    return time, signal
+    
 def create_time_freq_plots(time, signal_time, freq, signal_FT, title):
     '''
     This function creates a figure with two subplots showing the
@@ -45,15 +52,10 @@ def create_time_freq_plots(time, signal_time, freq, signal_FT, title):
     plt.ylabel('Power')
     plt.title(title + ' - Frequency Domain')
     
-
 sampling_rate = 500.0
-time = arange(0, 5+1/sampling_rate, 1/sampling_rate)
+maxTime = 5
+time, signal = create_sine_wave(sampling_rate, maxTime, [10, 35, 60])
 
-freq1 = 60
-freq2 = 35
-freq3 = 10
-
-signal = (1./3)*(sin(2*pi*freq1*time)+sin(2*pi*freq2*time)+sin(2*pi*freq3*time))
 signal_FT = abs(fft(signal))
 
 ## create frequency x-axis labels for FT plot
