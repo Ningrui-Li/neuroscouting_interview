@@ -3,6 +3,28 @@ from scipy import signal as sig
 #from numpy import *
 import matplotlib.pyplot as plt
 
+def create_time_freq_plots(time, signal_time, freq, signal_FT, title):
+    '''
+    This function creates a figure with two subplots showing the
+    time and frequency domain plots of the given signal vectors.
+    Assumes time is in seconds and frequency is in Hz.
+    '''
+    plt.figure()
+    # time domain plot
+    plt.subplot(2, 1, 1)
+    plt.plot(time, signal_time)
+    plt.xlabel('Time (s)')
+    plt.ylabel('Amplitude')
+    plt.title(title + '- Time Domain')
+
+    # frequency domain plot
+    plt.subplot(2, 1, 2)
+    plt.bar(freq, abs(signal_FT), width=0.2)
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Power')
+    plt.title(title + ' - Frequency Domain')
+    
+
 sampling_rate = 500.0
 time = arange(0, 5+1/sampling_rate, 1/sampling_rate)
 
@@ -48,35 +70,13 @@ f = f[frequencyLimitIndices]
 signal_FT = signal_FT[frequencyLimitIndices]
 signal_filtered_FT = signal_filtered_FT[frequencyLimitIndices]
 
-# Unfiltered signal - time domain plot
-plt.figure(2)
-plt.subplot(2, 1, 1)
-plt.plot(time, signal)
-plt.xlabel('Time (s)')
-plt.ylabel('Amplitude')
-plt.title('Unfiltered Signal (Sum of 10 Hz, 35 Hz, 60 Hz Sine Waves) - Time Domain')
+# Unfiltered signal time and freq plots
+create_time_freq_plots(time, signal, f, signal_FT,
+                       'Unfiltered Signal')
 
-# Unfiltered signal - frequency domain plot
-plt.subplot(2, 1, 2)
-plt.bar(f, signal_FT, width=0.2)
-plt.xlabel('Frequency (Hz)')
-plt.ylabel('Power')
-plt.title('Amplitude Spectrum of Unfiltered Signal - Frequency Domain')
-
-# 60 Hz Notch Filtered signal - time domain plot
-plt.figure(3)
-plt.subplot(2, 1, 1)
-plt.plot(time, signal_filtered)
-plt.xlabel('Time (s)')
-plt.ylabel('Amplitude')
-plt.title('60 Hz Notch Filtered Signal (Sum of 10 Hz, 35 Hz Sine Waves) - Time Domain')
-
-# 60 Hz Notch Filtered signal - frequency domain plot
-plt.subplot(2, 1, 2)
-plt.bar(f, signal_filtered_FT, width=0.2)
-plt.xlabel('Frequency (Hz)')
-plt.ylabel('Power')
-plt.title('Amplitude Spectrum of 60 Hz Notch Filtered Signal - Frequency Domain')
+# 60 Hz notch filtered signal time and freq plots
+create_time_freq_plots(time, signal_filtered, f, signal_filtered_FT,
+                       '60 Hz Notch Filtered Signal')
 
 plt.tight_layout()
 plt.show()
