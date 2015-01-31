@@ -28,7 +28,7 @@ N, Wn = sig.buttord(Wp, Ws, 3, 40)  # N = order of Butterworth filter
                                     # Wn = Butterworth cutoff frequencies
 B, A = sig.butter(N, Wn, 'stop')
 
-# Check 60 Hz Notch Filter Frequency Response
+# Make 60 Hz Notch Filter Magnitude Response plot
 w_notch_filt, H_notch_filt = sig.freqz(B, A)
 w_notch_filter = multiply(w_notch_filt, (sampling_rate/2)/pi) # convert from radians to Hz
 
@@ -37,6 +37,10 @@ plt.plot(w_notch_filter, abs(H_notch_filt))
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Notch Filter Amplitude')
 plt.title('60 Hz Notch Filter - Magnitude Response')
+
+# Apply notch filter to signal -> also get FFT of filtered signal
+signal_filtered = sig.filtfilt(B, A, signal)
+signal_filtered_FT = abs(fft(signal_filtered))
 
 # limit frequency range between 0 Hz - 75 Hz for FT plot
 frequencyLimitIndices = nonzero(f<75);
