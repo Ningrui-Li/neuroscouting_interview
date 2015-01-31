@@ -44,8 +44,9 @@ signal_filtered_FT = abs(fft(signal_filtered))
 
 # limit frequency range between 0 Hz - 75 Hz for FT plot
 frequencyLimitIndices = nonzero(f<75);
-f = f[frequencyLimitIndices];
-signal_FT = signal_FT[frequencyLimitIndices];
+f = f[frequencyLimitIndices]
+signal_FT = signal_FT[frequencyLimitIndices]
+signal_filtered_FT = signal_filtered_FT[frequencyLimitIndices]
 
 # Unfiltered signal - time domain plot
 plt.figure(2)
@@ -61,6 +62,21 @@ plt.bar(f, signal_FT, width=0.2)
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Power')
 plt.title('Amplitude Spectrum of Unfiltered Signal - Frequency Domain')
+
+# 60 Hz Notch Filtered signal - time domain plot
+plt.figure(3)
+plt.subplot(2, 1, 1)
+plt.plot(time, signal_filtered)
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude')
+plt.title('60 Hz Notch Filtered Signal (Sum of 10 Hz, 35 Hz Sine Waves) - Time Domain')
+
+# 60 Hz Notch Filtered signal - frequency domain plot
+plt.subplot(2, 1, 2)
+plt.bar(f, signal_filtered_FT, width=0.2)
+plt.xlabel('Frequency (Hz)')
+plt.ylabel('Power')
+plt.title('Amplitude Spectrum of 60 Hz Notch Filtered Signal - Frequency Domain')
 
 plt.tight_layout()
 plt.show()
