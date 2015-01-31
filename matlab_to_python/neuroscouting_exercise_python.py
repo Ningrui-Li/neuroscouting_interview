@@ -1,9 +1,9 @@
 from scipy import *
+from scipy import signal as sig
 #from numpy import *
 import matplotlib.pyplot as plt
 
 sampling_rate = 500.0
-Filt = array([58, 62])
 time = arange(0, 5+1/sampling_rate, 1/sampling_rate)
 
 freq1 = 60
@@ -16,6 +16,16 @@ signal_FT = abs(fft(signal))
 # create frequency x-axis labels for FT plot
 L = (len(signal)-1)/2
 f = arange(0, sampling_rate/2 + (sampling_rate/2)/L, (sampling_rate/2)/L)
+
+# create 60 Hz notch filter
+Wp = array([58, 62])                # Passband edge frequencies (Hz)
+Ws = array([59, 61])                # Stopband edge frequencies (Hz)
+Wp = Wp / (sampling_rate/2)         # Normalize to radians
+Ws = Ws / (sampling_rate/2)
+N, Wn = sig.buttord(Wp, Ws, 3, 40)  # N = order of Butterworth filter
+                                    # Wn = Butterworth cutoff frequencies
+print N
+print Wn
 
 # limit frequency range between 0 Hz - 75 Hz for FT plot
 frequencyLimitIndices = nonzero(f<75);
@@ -36,5 +46,5 @@ plt.xlabel('Frequency (Hz)')
 plt.ylabel('Power')
 plt.title('Amplitude Spectrum of Unfiltered Signal - Frequency Domain')
 
-plt.tight_layout()
-plt.show()
+#plt.tight_layout()
+#plt.show()
