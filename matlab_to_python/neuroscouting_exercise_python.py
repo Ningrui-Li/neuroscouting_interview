@@ -27,14 +27,13 @@ def main():
     signal_filtered_FT = signal_filtered_FT[frequencyLimitIndices]
     
     # Unfiltered signal time and freq plots
-    create_time_freq_plots(time, signal, f, signal_FT,
+    create_time_freq_plots(time, signal, f, signal_FT, 
                            'Unfiltered Signal')
 
     # 60 Hz notch filtered signal time and freq plots
     create_time_freq_plots(time, signal_filtered, f, signal_filtered_FT,
                            '60 Hz Notch Filtered Signal')
 
-    plt.tight_layout()
     plt.show()
 
 def create_sine_wave(fs, maxTime, freqs):
@@ -86,6 +85,8 @@ def create_time_freq_plots(time, signal_time, freq, signal_FT, title):
     plt.ylabel('Power')
     plt.title(title + ' - Frequency Domain')
     
+    plt.tight_layout()
+
 def notch_filter_signal(signal, Wp, Ws, fs, debug):
     '''
     Applies a notch filter to input signal using the given stopband and
