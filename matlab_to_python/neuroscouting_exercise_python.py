@@ -127,4 +127,5 @@ def notch_filter_signal(signal, Wp, Ws, fs, debug):
     # Apply notch filter to signal
     signal_filtered = sig.filtfilt(B, A, signal)
     return signal_filtered
+    
 main()
