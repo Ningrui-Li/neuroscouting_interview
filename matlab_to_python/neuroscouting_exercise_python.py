@@ -87,7 +87,7 @@ def create_time_freq_plots(time, signal_time, freq, signal_FT, title):
     
     plt.tight_layout()
 
-def notch_filter_signal(signal, Wp, Ws, fs, debug):
+def notch_filter_signal(signal, Wp, Ws, fs, debug=False):
     '''
     Applies a notch filter to input signal using the given stopband and
     passband frequencies.
