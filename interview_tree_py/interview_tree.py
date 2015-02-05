@@ -123,12 +123,15 @@ def printTree(treeArray, outputFileName):
     print "Writing tree to " + outputFileName
     
     numLevels = int(math.log(len(treeArray), 2))
+    charsPerNode = len(str(max(treeArray)))
+
     
     # total number of characters per line
-    charsBetweenNodes = 3*pow(2, numLevels-1) - 1
+    maxNumNodesPerLevel = pow(2, numLevels-1) # lowest tree level has the max number of nodes per line
+    charsBetweenNodes = 3*charsPerNode*maxNumNodesPerLevel-1 # Each node needs whitespace as well as 
     
-    for level in range(1, numLevels+1):
-        # Loop through each tree level.
+    for level in range(1, numLevels+1):            
+         # Loop through each tree level.
         
         # charsBetweenNodes is used to determine the amount of whitespace between
         # node values in the printed tree. As the depth of the tree increases, there
@@ -146,30 +149,33 @@ def printTree(treeArray, outputFileName):
         levelString = ''
         # connectorString contains the connections between node values
         connectorString = ''
+
         for levelIndex in range(pow(2, level-1)):
             # Loop through each node in the current level and concatenate each
             # node value to a simple string, with node values separated by spaces.
             currentIndex = levelFirstIndex + levelIndex;
-                           
+            nodeVal = '{val: ^{spacing}}'.format(val=str(treeArray[currentIndex]), spacing=str(charsPerNode))            
+            print nodeVal
             if level == numLevels:
                 # The deepest level is a special case because there is no whitespace before the 
                 # first node value.
                 # In addition, the nodes of branches with different parents are separated
                 # by just a single space.
                 if levelIndex == 0:
-                    levelString += str(treeArray[currentIndex]) + ' '*(charsBetweenNodes+1)
+                    levelString += nodeVal + charsPerNode*' '*(charsBetweenNodes+1)
                 elif levelIndex % 2 == 1:
-                    levelString += ' '*(charsBetweenNodes) + str(treeArray[currentIndex])
+                    levelString += ' '*(charsBetweenNodes)*charsPerNode + nodeVal
                 else:
-                    levelString += ' '*(charsBetweenNodes) + str(treeArray[currentIndex]) + ' '*(charsBetweenNodes+1)
+                    levelString += ' '*(charsBetweenNodes)*charsPerNode + nodeVal + ' '*(charsBetweenNodes+1)
             else:
                 # In all other levels, the spacing between nodes is more predictable.
-                levelString += ' '*(charsBetweenNodes) + str(treeArray[currentIndex]) + ' '*(charsBetweenNodes+1)
+                levelString += ' '*(charsBetweenNodes) + nodeVal + ' '*(charsBetweenNodes+1)
                 # connectorString basically places slashes on the characters right before and after each node
                 connectorString += ' '*(charsBetweenNodes-1) + '/ \\' + ' '*(charsBetweenNodes)
-                
+        
         treeFile.write(levelString+'\n') 
         treeFile.write(connectorString+'\n')
+
         
     treeFile.close()
     
