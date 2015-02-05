@@ -1,5 +1,7 @@
+import sys
+import math
+    
 def main():
-    import sys
     # read in CLI arguments
     args = parse_cli()
     # basic error checking
@@ -78,19 +80,29 @@ def makeTree(numLevels):
         # The array index of the first node in level 2 is array index 2.
         # The array index of the first node in level 3 is array index 4.
         # The array index of the first node in level N is array index 2^(N-1).
+        # levelFirstIndex is also the number of nodes in the current level.
         levelFirstIndex = pow(2, level-1)
-        for levelIndex in range(0, pow(2, level-1)):
+        
+        # The tree is symmetric, so we actually only need to calculate node values 
+        # for half the nodes in a level, since  the other half can be found by just
+        # reflecting this half. 
+        halfNumNodesInLevel = int(math.ceil(levelFirstIndex/2.))
+        for levelIndex in range(0, halfNumNodesInLevel):
             # Iterate through each index in the row.
             if level == 1:
             # Base case, root node holds value of 1
                 treeArray[1] = 1
             else:
+                # currentIndex contains index of node we are currently calculating the value for
                 currentIndex = levelIndex + levelFirstIndex
-
+                # complementIndex contains index of node of the current node reflected across the tree
+                complementIndex = 2*levelFirstIndex-levelIndex-1
+                
                 if (levelIndex == 0) or (levelIndex == pow(2, level-1)-1):
                     # If leftmost node or rightmost node of a level, the node value located there
                     # must be 1 because its parent must also be a leftmost or rightmost node, respectively.
                     treeArray[currentIndex] = 1
+                    treeArray[currentIndex]
                 elif (levelIndex % 2 == 1):
                     # If index of the node is odd, then it is a right child, so the value there
                     # should be the sum of its parent node and the node to the right of the parent.
@@ -103,7 +115,9 @@ def makeTree(numLevels):
                     
                     # Value of child node   =   value of parent node    + value of node to left of parent
                     treeArray[currentIndex] = treeArray[currentIndex/2] + treeArray[(currentIndex/2)-1]
-    
+                
+                # Don't need to compute all nodes in this level, since we can just reflect it.
+                treeArray[complementIndex] = treeArray[currentIndex]
     return treeArray
     
 def printTree(treeArray, outputFileName):
@@ -117,8 +131,6 @@ def printTree(treeArray, outputFileName):
     Outputs:
     Text file with name outputFileName will be created in the CWD.
     '''
-    import math
-
     treeFile = open(outputFileName, 'w')
     print "Writing tree to " + outputFileName
     
